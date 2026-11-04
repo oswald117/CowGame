@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>La Pradera | Cuidar las vacas</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <main>
+            <section class="game-over">
+                <h1 id="game-over-title">¡Juego terminado!</h1>
+                <p id="final-score">Puntaje final: 0</p>
+                <p id="max-score">Puntaje máximo: 0</p>
+                <button id="restart-button" class="restart-button">Reiniciar juego</button>
+            </section>
+        </main>
+    
+    </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const score = localStorage.getItem('score');
+            const maxScore = localStorage.getItem('maxScore');
+            if(!score){
+                window.location.href = 'index.html';
+            }
+            localStorage.removeItem('score');
+            document.getElementById('final-score').textContent = `Puntaje final: ${score}`;
+
+            if(maxScore){
+                document.getElementById('max-score').textContent = `Puntaje máximo: ${maxScore}`;
+            }
+
+            document.getElementById('restart-button').addEventListener('click', restartGame);
+        });
+
+        function restartGame() {
+            window.location.href = 'index.html';
+        }
+
+    </script>
+    
+</html>

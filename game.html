@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Pradera | Cuidar las vacas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="game-shell">
+        <header class="topbar">
+            <div class="game-score" aria-live="polite">
+                <span class="eyebrow">Puntaje</span>
+                <strong id="score">0</strong>
+            </div>
+        </header>
+
+        <section class="game-layout" id="game-layout">
+            <div class="game-main">
+                <div class="game-heading">
+                    <div>
+                        <span class="eyebrow">Turno de <span id="farm-name">tu granja</span></span>
+                        <h1 class="game-title">¡Atiende a la vaca!</h1>
+                    </div>
+                    <div class="round-info">Vaca <strong id="round">1</strong></div>
+                </div>
+                <div class="canvas-wrap">
+                    <canvas id="farm-canvas" width="900" height="500" aria-label="Vaca avanzando por la pradera"></canvas>
+                    <div class="canvas-tip"><span class="tip-key">Ayuda</span> Elige la herramienta antes de que la vaca se vaya</div>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="panel status-panel">
+                    <div class="panel-heading">
+                        <h2>Estado del turno</h2>
+                        <span class="live-dot">● EN VIVO</span>
+                    </div>
+                    <p id="cow-status" class="cow-status">Observa a la vaca y decide rápido.</p>
+                    <div class="time-label"><span>Tiempo restante</span><strong id="time-left">100%</strong></div>
+                    <div class="time-meter"><i id="time-meter"></i></div>
+                </div>
+
+                <div class="panel actions-panel">
+                    <div class="panel-heading">
+                        <h2>¿Qué necesita?</h2>
+                    </div>
+                    <button class="action-button" data-tool="syringe" type="button">
+                        <span class="action-icon" aria-hidden="true">💉</span>
+                        <span><b>Jeringa</b><small>Para una vaca enferma</small></span>
+                        <kbd>1</kbd>
+                    </button>
+                    <button class="action-button" data-tool="hay" type="button">
+                        <span class="action-icon" aria-hidden="true">🌾</span>
+                        <span><b>Heno</b><small>Para una vaca hambrienta</small></span>
+                        <kbd>2</kbd>
+                    </button>
+                    <button class="action-button" data-tool="bucket" type="button">
+                        <span class="action-icon" aria-hidden="true">🪣</span>
+                        <span><b>Cubeta</b><small>Para una vaca a ordenar</small></span>
+                        <kbd>3</kbd>
+                    </button>
+                </div>
+            </aside>
+        </section>
+
+        <footer class="footer-note"><span>© 2026 LaLa Cow</span></footer>
+    </main>
+    <script src="game.js"></script>
+</body>
+</html>
