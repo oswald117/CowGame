@@ -25,6 +25,10 @@ const cowData = {
     }
 };
 
+const BASE_ROUND_DURATION = 7000;
+const SPEED_INCREMENT = 0.2;
+const MAX_SPEED = 2.8;
+
 const canvas = document.getElementById('farm-canvas');
 const context = canvas.getContext('2d');
 const elements = {
@@ -34,9 +38,6 @@ const elements = {
     timeLeft: document.getElementById('time-left'),
     timeMeter: document.getElementById('time-meter'),
     layout: document.getElementById('game-layout'),
-    gameOver: document.getElementById('game-over'),
-    gameOverTitle: document.getElementById('game-over-title'),
-    gameOverMessage: document.getElementById('game-over-message'),
     finalScore: document.getElementById('final-score')
 };
 
@@ -47,7 +48,8 @@ const state = {
     cowImage: null,
     x: -150,
     startedAt: 0,
-    duration: 7000,
+    duration: BASE_ROUND_DURATION,
+    speed: 1,
     lastFrame: 0,
     running: true
 };
@@ -72,7 +74,8 @@ function startRound() {
     state.cowImage.src = cowData[state.cow].image;
     state.x = -150;
     state.startedAt = performance.now();
-    state.duration = Math.max(2300, 7000 - (state.round - 1) * 230);
+    state.speed = Math.min(MAX_SPEED, 1 + (state.round - 1) * SPEED_INCREMENT);
+    state.duration = BASE_ROUND_DURATION / state.speed;
     elements.round.textContent = state.round;
     elements.status.textContent = cowData[state.cow].status;
     elements.timeMeter.style.width = '100%';
@@ -120,7 +123,7 @@ function drawScene(now) {
     elements.timeMeter.style.width = `${remaining * 100}%`;
     elements.timeLeft.textContent = `${Math.ceil(remaining * 100)}%`;
     if (progress >= 1) {
-        finishGame('¡La vaca se escapó!', 'No alcanzaste a elegir una herramienta.');
+        finishGame();
         return;
     }
     if (state.running) {
@@ -161,24 +164,21 @@ function chooseTool(tool) {
         startRound();
         return;
     }
-    finishGame('¡Herramienta equivocada!', `Esta vaca estaba ${cowData[state.cow].label}.`);
+    finishGame();
 }
 
-function finishGame(title, message) {
-    
-    window.navigator.vibrate(200);
-    localStorage.setItem('score', String(state.score));
-    window.location.href = 'finish.html';
+function finishGame() {
 
-    state.running = false;
-    cancelAnimationFrame(state.lastFrame);
-    elements.gameOverTitle.textContent = title;
-    elements.gameOverMessage.textContent = message;
-    elements.finalScore.textContent = state.score;
-    elements.layout.hidden = true;
-    elements.gameOver.hidden = false;
     const previousBest = Number(localStorage.getItem('maxScore')) || 0;
     if (state.score > previousBest) localStorage.setItem('maxScore', String(state.score));
+    
+
+    window.navigator.vibrate(200);
+    state.running = false;
+    localStorage.setItem('score', String(state.score));
+    cancelAnimationFrame(state.lastFrame);
+    window.location.href = 'finish.html';
+
 }
 
 function restartGame() {

@@ -11,13 +11,24 @@
     </head>
 
     <body>
-        <main>
+        <main class="game-shell finish-shell">
+            <header class="topbar">
+                <a class="brand" href="index.html" aria-label="Volver al inicio">
+                    <span class="brand-mark" aria-hidden="true">✦</span>
+                    <span><strong>La Pradera</strong><small>granja lechera</small></span>
+                </a>
+            </header>
             <section class="game-over">
+                <div class="finish-illustration" aria-hidden="true">
+                    <img src="images/cow.svg" alt="">
+                </div>
+                <p class="eyebrow">Turno completado</p>
                 <h1 id="game-over-title">¡Juego terminado!</h1>
                 <p id="final-score">Puntaje final: 0</p>
                 <p id="max-score">Puntaje máximo: 0</p>
-                <button id="restart-button" class="restart-button">Reiniciar juego</button>
+                <button id="restart-button" class="start-button" type="button">Reiniciar juego</button>
             </section>
+            <footer class="footer-note"><span>© 2026 LaLa Cow</span></footer>
         </main>
     
     </body>
@@ -26,8 +37,9 @@
 
             const score = localStorage.getItem('score');
             const maxScore = localStorage.getItem('maxScore');
-            if(!score){
+            if(score === null){
                 window.location.href = 'index.html';
+                return;
             }
             localStorage.removeItem('score');
             document.getElementById('final-score').textContent = `Puntaje final: ${score}`;
