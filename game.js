@@ -173,7 +173,6 @@ function finishGame() {
     if (state.score > previousBest) localStorage.setItem('maxScore', String(state.score));
     
 
-    window.navigator.vibrate(200);
     state.running = false;
     localStorage.setItem('score', String(state.score));
     cancelAnimationFrame(state.lastFrame);
